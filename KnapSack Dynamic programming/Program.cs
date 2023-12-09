@@ -16,6 +16,9 @@ namespace KnapSack_Dynamic_programming
             GetMaxValueInContainer(maxcapacity, n, weights, values, data);
             Console.WriteLine($"Max value of items included in container:{data[n, maxcapacity]}");
             OutputItemInclusionStatus(n, maxcapacity, weights, values, itemNames, data);
+
+            Console.WriteLine( $"Max profit by recussion is {knapsackReccursion(maxcapacity,n,weights,values)} ");
+          
         }
 
         private static void OutputItemInclusionStatus(int n, int maxcapacity, int[] weights, int[] values, string[] itemNames, int[,] data)
@@ -59,6 +62,26 @@ namespace KnapSack_Dynamic_programming
                 }
             }
         }
+
+
+        private static int knapsackReccursion(int capacity, int n, int[] weights, int[] values)
+        {
+            if (n == 0 || capacity == 0)
+            {
+                return 0;
+            }
+            else if (weights[n - 1] > capacity)
+            {
+                return knapsackReccursion(capacity, n - 1, weights, values);
+            }
+            else
+            {
+                return Math.Max(values[n - 1] + knapsackReccursion(capacity - weights[n - 1], n - 1, weights, values),
+                    knapsackReccursion(capacity, n - 1, weights, values));
+            }
+        }
+
+
     }
 
   
